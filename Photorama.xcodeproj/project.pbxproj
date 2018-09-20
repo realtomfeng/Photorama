@@ -14,7 +14,7 @@
 		E2945ED6214EE43500496248 /* PhotoramaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945ED5214EE43500496248 /* PhotoramaTests.swift */; };
 		E2945EE1214EE43500496248 /* PhotoramaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945EE0214EE43500496248 /* PhotoramaUITests.swift */; };
 		E2945EEF214EE48400496248 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945EEE214EE48400496248 /* PhotosViewController.swift */; };
-		E2945EF1214EE8B800496248 /* FlickerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945EF0214EE8B800496248 /* FlickerAPI.swift */; };
+		E2945EF1214EE8B800496248 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945EF0214EE8B800496248 /* FlickrAPI.swift */; };
 		E2945EF3214EFD0F00496248 /* PhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2945EF2214EFD0F00496248 /* PhotoStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,7 @@
 		E2945EE0214EE43500496248 /* PhotoramaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoramaUITests.swift; sourceTree = "<group>"; };
 		E2945EE2214EE43500496248 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2945EEE214EE48400496248 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
-		E2945EF0214EE8B800496248 /* FlickerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickerAPI.swift; sourceTree = "<group>"; };
+		E2945EF0214EE8B800496248 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
 		E2945EF2214EFD0F00496248 /* PhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +104,7 @@
 				E2945EEE214EE48400496248 /* PhotosViewController.swift */,
 				E2945EC0214EE43300496248 /* AppDelegate.swift */,
 				E2945EC4214EE43300496248 /* Main.storyboard */,
-				E2945EF0214EE8B800496248 /* FlickerAPI.swift */,
+				E2945EF0214EE8B800496248 /* FlickrAPI.swift */,
 				E2945EF2214EFD0F00496248 /* PhotoStore.swift */,
 				E2945EC7214EE43500496248 /* Assets.xcassets */,
 				E2945EC9214EE43500496248 /* LaunchScreen.storyboard */,
@@ -265,7 +265,7 @@
 				E2945EEF214EE48400496248 /* PhotosViewController.swift in Sources */,
 				E2945EC1214EE43300496248 /* AppDelegate.swift in Sources */,
 				E2945EF3214EFD0F00496248 /* PhotoStore.swift in Sources */,
-				E2945EF1214EE8B800496248 /* FlickerAPI.swift in Sources */,
+				E2945EF1214EE8B800496248 /* FlickrAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

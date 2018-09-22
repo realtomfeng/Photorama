@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum PhotoResults {
-    case sucess([Photo])
+enum PhotoResult {
+    case success([Photo])
     case failure(Error)
 }
 

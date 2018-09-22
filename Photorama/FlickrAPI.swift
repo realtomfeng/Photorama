@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum flickrError: Error {
+    case invalidJSONData
+}
+
 enum Method: String {
     case interestingPhotos = "flickr.interestingness.getList"
 }
@@ -16,10 +20,14 @@ struct FlickrAPI {
     static var interestingPhotosURL: URL {
         return flickrURL(method: .interestingPhotos, parameters: ["extras": "url_h,date_taken"])
     }
-    
     private static let baseURLString = "https://api.flickr.com/services/rest"
-    
     private static let apiKey = "ba7aefb0448212777df601855fcc64bb"
+    
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
     
     private static func flickrURL(method: Method, parameters: [String:String]?) -> URL {
         
@@ -48,5 +56,22 @@ struct FlickrAPI {
         components.queryItems = queryItems
         
         return components.url!
+    }
+    
+    static func photos(fromJSON data: Data) -> PhotoResult {
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+            guard
+                let jsonDictionary = jsonObject as? [AnyHashable:Any],
+                let photos = jsonDictionary["photos"] as? [String:Any],
+                let photosArray = photos["photo"] as? [[String:Any]]
+                else {
+                        return .failure(flickrError.invalidJSONData)
+            }
+            var finalPhotos = [Photo]()
+            return .success(finalPhotos)
+        } catch let error {
+            return .failure(error)
+        }
     }
 }

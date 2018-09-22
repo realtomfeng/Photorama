@@ -103,9 +103,9 @@
 		E2945EBF214EE43300496248 /* Photorama */ = {
 			isa = PBXGroup;
 			children = (
+				E2945EC4214EE43300496248 /* Main.storyboard */,
 				E2945EEE214EE48400496248 /* PhotosViewController.swift */,
 				E2945EC0214EE43300496248 /* AppDelegate.swift */,
-				E2945EC4214EE43300496248 /* Main.storyboard */,
 				E2945EF0214EE8B800496248 /* FlickrAPI.swift */,
 				E2945EF2214EFD0F00496248 /* PhotoStore.swift */,
 				E27A66EC2156CFFA0042B561 /* Photo.swift */,

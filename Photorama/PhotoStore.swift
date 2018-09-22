@@ -18,9 +18,7 @@ class PhotoStore {
     func fetchInterestingPhotos() {
         let url = FlickrAPI.interestingPhotosURL
         let request = URLRequest(url: url)
-        let task = session.dataTask(with: request) {
-            (data, response, error) -> Void in
-            
+        let task = session.dataTask(with: request) { (data, response, error) -> Void in //This closure is called when this request finishes and data is recieved if possible
             if let jsonData = data {
                 if let jsonString = String(data: jsonData, encoding: .utf8) {
                     print(jsonString)

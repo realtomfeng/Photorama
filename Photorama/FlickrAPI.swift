@@ -14,11 +14,16 @@ enum flickrError: Error {
 
 enum Method: String {
     case interestingPhotos = "flickr.interestingness.getList"
+    
+    case recentPhotos = "flickr.photos.getRecent"
 }
 
 struct FlickrAPI {
     static var interestingPhotosURL: URL {
         return flickrURL(method: .interestingPhotos, parameters: ["extras": "url_h,date_taken"])
+    }
+    static var recentPhotosURL: URL {
+        return flickrURL(method: .recentPhotos, parameters: ["extras": "url_h,date_taken"])
     }
     private static let baseURLString = "https://api.flickr.com/services/rest"
     private static let apiKey = "ba7aefb0448212777df601855fcc64bb"
@@ -67,22 +72,22 @@ struct FlickrAPI {
                 return nil
         }
         
-        return Photo(title: title, remoteURL: url, photoID: photoID, dateTaken: dateTaken)
+        return Photo(title: title, remoteURL: url, photoID: photoID, dateTaken: dateTaken) //creates a Photo object with the parameters from the parsed JSON
     }
     
-    static func photos(fromJSON data: Data) -> PhotosResult {
+    static func photos(fromJSON data: Data) -> PhotosResult { //This gets called from the PhotoStore with the data to parse the data
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
             guard
-                let jsonDictionary = jsonObject as? [AnyHashable:Any],
-                let photos = jsonDictionary["photos"] as? [String:Any],
-                let photosArray = photos["photo"] as? [[String:Any]]
+                let jsonDictionary = jsonObject as? [AnyHashable:Any], //created a dictionary of JSON
+                let photos = jsonDictionary["photos"] as? [String:Any], //takes only the photos bit of the data
+                let photosArray = photos["photo"] as? [[String:Any]] //takes the photo part of the photos which is an array
                 else {
                         return .failure(flickrError.invalidJSONData)
             }
             var finalPhotos = [Photo]()
             for photoJSON in photosArray {
-                if let photo = photo(fromJSON: photoJSON) {
+                if let photo = photo(fromJSON: photoJSON) { //This calls the photo function to convert the parsed data into Photo objects
                 finalPhotos.append(photo)
                 }
             }

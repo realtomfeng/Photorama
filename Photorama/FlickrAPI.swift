@@ -71,7 +71,19 @@ struct FlickrAPI {
             let dateTaken = dateFormatter.date(from: dateString)
             else {
                 return nil
+            }
+        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
+        let predicate = NSPredicate(format: "\(#keyPath(Photo.photoID)) == \(photoID)")
+        fetchRequest.predicate = predicate
+        
+        var fetchedPhotos: [Photo]?
+        context.performAndWait {
+            fetchedPhotos = try? fetchRequest.execute()
         }
+        if let existingPhoto = fetchedPhotos?.first {
+            return existingPhoto
+        }
+        
         var photo: Photo!
         context.performAndWait {
             photo = Photo(context: context)

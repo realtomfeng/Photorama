@@ -20,18 +20,26 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         
         collectionView.dataSource = photoDataSource
         collectionView.delegate = self
+        
+        updateDataSource()
     
         store.fetchInterestingPhotos {
             (photosResult) -> Void in
-            switch photosResult {
-            case let .success(photos):
-                print("Successfully found \(photos.count) photos.")
-                self.photoDataSource.photos = photos
-            case let .failure(error):
-                print("Error fetching interesting photos: \(error)")
-                self.photoDataSource.photos.removeAll()
+            self.updateDataSource()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showPhoto"?:
+            if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+                let photo = photoDataSource.photos[selectedIndexPath.row]
+                let destinationVC = segue.destination as! PhotoInfoViewController
+                destinationVC.photo = photo
+                destinationVC.store = store
             }
-            self.collectionView.reloadSections(IndexSet(integer: 0))
+        default:
+            preconditionFailure("Unexpected Segue Indentifier")
         }
     }
     
@@ -54,17 +62,17 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "showPhoto"?:
-            if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
-                let photo = photoDataSource.photos[selectedIndexPath.row]
-                let destinationVC = segue.destination as! PhotoInfoViewController
-                destinationVC.photo = photo
-                destinationVC.store = store
+    private func updateDataSource() {
+        store.fetchAllPhotos {
+            (PhotosResult) in
+            
+            switch PhotosResult {
+            case let .success(photos):
+                self.photoDataSource.photos = photos
+            case .failure:
+                self.photoDataSource.photos.removeAll()
             }
-        default:
-            preconditionFailure("Unexpected Segue Indentifier")
+            self.collectionView.reloadSections(IndexSet(integer: 0))
         }
     }
 }

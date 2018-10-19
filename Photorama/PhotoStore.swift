@@ -57,7 +57,15 @@ class PhotoStore {
             if let jsonResponse = response as? HTTPURLResponse {
                 print("The status code is \(jsonResponse.statusCode) and the headers are \(jsonResponse.allHeaderFields)")
             }
-            let result = self.processPhotosRequest(data: data, error: error)
+            var result = self.processPhotosRequest(data: data, error: error)
+            
+            if case .success = result {
+                do {
+                    try self.persistantContainer.viewContext.save()
+                } catch let error {
+                    result = .failure(error)
+                }
+            }
             OperationQueue.main.addOperation {
                 completion(result)
             }
@@ -91,6 +99,21 @@ class PhotoStore {
             }
         }
         task.resume()
+    }
+    
+    func fetchAllPhotos(completion: @escaping (PhotosResult) -> Void) {
+        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
+        let sortByDateTaken = NSSortDescriptor(key: #keyPath(Photo.dateTaken), ascending: true)
+        fetchRequest.sortDescriptors = [sortByDateTaken]
+        let viewContext = persistantContainer.viewContext
+        viewContext.perform {
+            do {
+                let allPhotos = try viewContext.fetch(fetchRequest)
+                completion(.success(allPhotos))
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
     
     private func processImageRequest(data: Data?, error: Error?) -> ImageResult {
